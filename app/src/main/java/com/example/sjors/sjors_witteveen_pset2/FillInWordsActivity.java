@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,23 +16,23 @@ import java.util.Random;
 
 public class FillInWordsActivity extends Activity {
 
+    private InputStream stream;
     private Story story;
 
     private TextView words_left;
     private EditText text_field;
-    private Button button;
+    private Button ok_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_in_words);
 
-        InputStream stream = null;
         AssetManager assetManager = getAssets();
 
         words_left = (TextView) findViewById(R.id.words_left);
         text_field = (EditText) findViewById(R.id.text_field);
-        button = (Button) findViewById(R.id.button);
+        ok_button = (Button) findViewById(R.id.ok_button);
 
         try {
             String[] files = assetManager.list("mad_libs");
@@ -64,13 +65,19 @@ public class FillInWordsActivity extends Activity {
             if (story.getPlaceholderRemainingCount() == 1) {
                 text = story.getPlaceholderRemainingCount() + " word left";
                 String string = "Finish";
-                button.setText(string);
+                ok_button.setText(string);
             } else {
                 text = story.getPlaceholderRemainingCount() + " words left";
             }
 
             words_left.setText(text);
             text_field.setHint(story.getNextPlaceholder());
+
+            Toast.makeText(getApplicationContext(), "Great! Keep going!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void differentStory(View view) {
+        finish();
     }
 }
