@@ -18,7 +18,11 @@
 
         <activity android:name=".FillInWordsActivity"
             android:label="Get words"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".StoryActivity"
+            android:label="Reveal story"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

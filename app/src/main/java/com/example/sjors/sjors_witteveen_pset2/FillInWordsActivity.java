@@ -54,9 +54,11 @@ public class FillInWordsActivity extends Activity {
         text_field.getText().clear();
 
         if (story.isFilledIn()) {
-            Intent intent = new Intent(this, FillInWordsActivity.class);
-
+            Intent intent = new Intent(this, StoryActivity.class);
+            intent.putExtra("story", story.toString());
             startActivity(intent);
+
+            finish();
         } else {
             String text;
             if (story.getPlaceholderRemainingCount() == 1) {
