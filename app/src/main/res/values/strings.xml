@@ -4,4 +4,6 @@
     <string name="button_text">Continue</string>
     <string name="image_desc">Mad Libs</string>
     <string name="objective_text">Fill in the words to complete the story.</string>
+    <string name="ok">OK</string>
+    <string name="story_text">Your Mad Lib story!</string>
 </resources>

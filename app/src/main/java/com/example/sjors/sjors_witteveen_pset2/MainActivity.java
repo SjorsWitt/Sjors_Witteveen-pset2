@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onContinue(View view) {
 
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, FillInWordsActivity.class);
 
         startActivity(intent);
 

@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SecondActivity"
+        <activity android:name=".FillInWordsActivity"
             android:label="Get words"
             android:theme="@style/AppTheme"/>
     </application>
