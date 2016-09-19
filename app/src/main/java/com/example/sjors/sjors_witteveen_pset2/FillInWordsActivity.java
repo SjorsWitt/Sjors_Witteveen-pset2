@@ -28,26 +28,30 @@ public class FillInWordsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_in_words);
 
-        AssetManager assetManager = getAssets();
-
         words_left = (TextView) findViewById(R.id.words_left);
         text_field = (EditText) findViewById(R.id.text_field);
         ok_button = (Button) findViewById(R.id.ok_button);
 
-        try {
-            String[] files = assetManager.list("mad_libs");
-            int random = new Random().nextInt(files.length);
-            stream = assetManager.open("mad_libs/" + files[random]);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (savedInstanceState == null) {
+            AssetManager assetManager = getAssets();
+
+            try {
+                String[] files = assetManager.list("mad_libs");
+                int random = new Random().nextInt(files.length);
+                stream = assetManager.open("mad_libs/" + files[random]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            story = new Story(stream);
+        } else {
+            story = (Story) savedInstanceState.getSerializable("story");
         }
 
-        story = new Story(stream);
-
+        assert story != null;
         String text = story.getPlaceholderRemainingCount() + " words left";
         words_left.setText(text);
         text_field.setHint(story.getNextPlaceholder());
-
     }
 
     public void buttonClicked(View view) {
@@ -79,5 +83,12 @@ public class FillInWordsActivity extends Activity {
 
     public void differentStory(View view) {
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("story", story);
     }
 }
