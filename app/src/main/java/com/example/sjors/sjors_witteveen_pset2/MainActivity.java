@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    // new intent when continue buton is clicked
     public void onContinue(View view) {
         Intent intent = new Intent(this, FillInWordsActivity.class);
         startActivity(intent);

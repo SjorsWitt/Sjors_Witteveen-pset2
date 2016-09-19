@@ -32,9 +32,11 @@ public class FillInWordsActivity extends Activity {
         text_field = (EditText) findViewById(R.id.text_field);
         ok_button = (Button) findViewById(R.id.ok_button);
 
+        // either create a new story or remember from savedInstanceState
         if (savedInstanceState == null) {
             AssetManager assetManager = getAssets();
 
+            // get InputStream with random file name from assets/mad_libs/
             try {
                 String[] files = assetManager.list("mad_libs");
                 int random = new Random().nextInt(files.length);
@@ -45,25 +47,33 @@ public class FillInWordsActivity extends Activity {
 
             story = new Story(stream);
         } else {
+            // get story from savedInstanceState
             story = (Story) savedInstanceState.getSerializable("story");
         }
-
         assert story != null;
+
+        // change text and hint
         String text = story.getPlaceholderRemainingCount() + " words left";
         words_left.setText(text);
         text_field.setHint(story.getNextPlaceholder());
     }
 
+    // when OK button is clicked
     public void buttonClicked(View view) {
+
+        // fill in placeholder and clear EditText
         story.fillInPlaceholder(text_field.getText().toString());
         text_field.getText().clear();
 
+        // start new activity when story is filled in
         if (story.isFilledIn()) {
             Intent intent = new Intent(this, StoryActivity.class);
             intent.putExtra("story", story.toString());
             startActivity(intent);
 
             finish();
+
+        // change text and hint and create toast pop-up
         } else {
             String text;
             if (story.getPlaceholderRemainingCount() == 1) {
@@ -77,10 +87,12 @@ public class FillInWordsActivity extends Activity {
             words_left.setText(text);
             text_field.setHint(story.getNextPlaceholder());
 
-            Toast.makeText(getApplicationContext(), "Great! Keep going!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Great! Keep going!",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
+    // finish activity when button clicked
     public void differentStory(View view) {
         finish();
     }
