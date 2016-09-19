@@ -53,9 +53,7 @@ public class FillInWordsActivity extends Activity {
         assert story != null;
 
         // change text and hint
-        String text = story.getPlaceholderRemainingCount() + " words left";
-        words_left.setText(text);
-        text_field.setHint(story.getNextPlaceholder());
+        changeTextAndHint();
     }
 
     // when OK button is clicked
@@ -75,21 +73,25 @@ public class FillInWordsActivity extends Activity {
 
         // change text and hint and create toast pop-up
         } else {
-            String text;
-            if (story.getPlaceholderRemainingCount() == 1) {
-                text = story.getPlaceholderRemainingCount() + " word left";
-                String string = "Finish";
-                ok_button.setText(string);
-            } else {
-                text = story.getPlaceholderRemainingCount() + " words left";
-            }
-
-            words_left.setText(text);
-            text_field.setHint(story.getNextPlaceholder());
+            changeTextAndHint();
 
             Toast.makeText(getApplicationContext(), "Great! Keep going!",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void changeTextAndHint() {
+        String text;
+        if (story.getPlaceholderRemainingCount() == 1) {
+            text = story.getPlaceholderRemainingCount() + " word left";
+            String string = "Finish";
+            ok_button.setText(string);
+        } else {
+            text = story.getPlaceholderRemainingCount() + " words left";
+        }
+
+        words_left.setText(text);
+        text_field.setHint(story.getNextPlaceholder());
     }
 
     // finish activity when button clicked
